@@ -4,7 +4,9 @@ import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 
-public class User {
+import org.springframework.hateoas.RepresentationModel;
+
+public class User extends RepresentationModel<User> {
 
 	private Integer id;
 	

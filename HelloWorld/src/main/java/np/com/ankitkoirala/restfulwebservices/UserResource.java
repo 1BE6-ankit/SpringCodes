@@ -5,8 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,12 +35,20 @@ public class UserResource {
 		return userDaoService.getUsers();
 	}
 	
+	
 	@GetMapping("/users/{id}")
 	public User getUser(@PathVariable int id) {
 		User user = userDaoService.getUser(id);
 		if(user == null) {
 			throw new UserNotFoundException(id);
-		} 
+		}
+
+		Link selfLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserResource.class).getUser(user.getId()))
+				.withSelfRel();
+		Link allUsersLink = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserResource.class).getUsers()).withRel("allUsers");
+		user.add(selfLink);
+		user.add(allUsersLink);
+		
 		
 		return user;
 	}
@@ -59,7 +68,7 @@ public class UserResource {
 	
 	@GetMapping("/users/{id}/posts")
 	public List<UserPost> getUserAllPosts(@PathVariable int id) {
-		List<UserPost> userPosts = u serPostDaoService.getUserAllPosts(id);
+		List<UserPost> userPosts = userPostDaoService.getUserAllPosts(id);
 		if(userPosts == null) {
 			throw new UserPostNotFoundException(id);
 		}
