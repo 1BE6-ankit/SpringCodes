@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.springframework.hateoas.RepresentationModel;
 
-public class User extends RepresentationModel<User> {
+public class User {
 
 	private Integer id;
 	

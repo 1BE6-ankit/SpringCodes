@@ -2,7 +2,9 @@ package np.com.ankitkoirala.restfulwebservices.user;
 
 import java.util.Date;
 
-public class UserPost {
+import org.springframework.hateoas.RepresentationModel;
+
+public class UserPost extends RepresentationModel<UserPost> {
 
 	private Integer userId;
 	private Integer postId;
