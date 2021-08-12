@@ -24,8 +24,6 @@ public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(errorBean, HttpStatus.NOT_FOUND);
 	}
 	
-	
-	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
