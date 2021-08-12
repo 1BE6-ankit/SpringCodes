@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
@@ -40,7 +43,7 @@ public class UserResource {
 	}
 	
 	
-	@GetMapping("/users/{id}")
+	@GetMapping(value = "/users/{id}")
 	public EntityModel<User> getUser(@PathVariable int id) {
 		User user = (userDaoService.getUser(id));
 		if(user == null) {
@@ -58,7 +61,7 @@ public class UserResource {
 		return userModel;
 	}
 	
-	@PostMapping("/users")
+	@PostMapping(value = "/users")
 	public ResponseEntity<Object> addUser(@RequestBody @Valid User user) {
 		userDaoService.addUser(user);
 		
@@ -71,7 +74,7 @@ public class UserResource {
 		return ResponseEntity.created(uriComponents.toUri()).build();		
 	}
 	
-	@GetMapping("/users/{id}/posts")
+	@GetMapping(value = "/users/{id}/posts")
 	public CollectionModel<EntityModel<UserPost>> getUserAllPosts(@PathVariable int id) {
 		List<UserPost> userPostsInitial = userPostDaoService.getUserAllPosts(id);
 		if(userPostsInitial == null) {

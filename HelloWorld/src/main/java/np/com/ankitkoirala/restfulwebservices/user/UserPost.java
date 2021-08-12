@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
+@JsonFilter("UserFilter")
 public class UserPost extends RepresentationModel<UserPost> {
 
 	private Integer userId;
