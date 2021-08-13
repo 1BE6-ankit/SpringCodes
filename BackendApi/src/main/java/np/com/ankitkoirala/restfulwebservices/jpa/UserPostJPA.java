@@ -2,6 +2,7 @@ package np.com.ankitkoirala.restfulwebservices.jpa;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="user_post")
@@ -21,40 +22,19 @@ public class UserPostJPA extends RepresentationModel<UserPostJPA> {
 	
 	@Id
 	@GeneratedValue( strategy=GenerationType.AUTO )
-	private Integer postId;
+	private Integer id;
 	
+	@Column(name="post_content")
 	private String postContent;
+	
 	private Date date;
 	
 	@ManyToOne(fetch=FetchType.LAZY, optional=false)
-	@JoinColumn(name="user_id")
+//	@JoinColumn(name="user_id")
+	@JsonIgnore
 	private UserJPA user;
 	
-	public UserPostJPA(int postId, String postContent, Date date, UserJPA user) {
-		super();
-		this.user = user;
-		this.postId = postId;
-		this.postContent = postContent;
-		this.date = date;
-	}
-
-
-	public UserJPA getUser() {
-		return user;
-	}
-
-	public void setUser(UserJPA user) {
-		this.user = user;
-	}
-
-
-	public Integer getPostId() {
-		return postId;
-	}
-
-	public void setPostId(Integer postId) {
-		this.postId = postId;
-	}
+	public UserPostJPA() {}
 
 	public String getPostContent() {
 		return postContent;
@@ -67,6 +47,22 @@ public class UserPostJPA extends RepresentationModel<UserPostJPA> {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public UserJPA getUser() {
+		return user;
+	}
+
+	public void setUser(UserJPA user) {
+		this.user = user;
 	}
 	
 	
